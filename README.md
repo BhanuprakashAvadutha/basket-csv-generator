@@ -1,13 +1,12 @@
 # basket-csv-generator
 
-[![Vercel](https://img.shields.io/badge/deployed-Vercel-black)](https://basket-csv-generator.vercel.app)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 
 Research note → broker-ready basket CSV in 10 seconds using Claude API.
 
-**Problem solved:** Building 21-column broker CSVs by hand from research notes took 4–5 min per basket, with a non-zero error rate. Wrong CE/PE → real-money mistake. Wrong date format → upload fails.
+> **Note:** Sanitized excerpt of a private production system I built at a SEBI-registered research firm. The full codebase is proprietary; this repo shows the core logic and design decisions.
 
-**Live demo:** [basket-csv-generator.vercel.app](https://basket-csv-generator.vercel.app)
+**Problem solved:** Building 21-column broker CSVs by hand from research notes took 4–5 min per basket, with a non-zero error rate. Wrong CE/PE → real-money mistake. Wrong date format → upload fails.
 
 ## How it works
 
@@ -45,7 +44,7 @@ NIFTY24DEC21000CE,NFO,SELL,SL,50,40,40,...
 ## API
 
 ```bash
-curl -X POST https://basket-csv-generator.vercel.app/api/generate \
+curl -X POST http://localhost:3000/api/generate \
   -H "Content-Type: application/json" \
   -d '{
     "research_note": "Buy 100 Reliance at market CNC",
@@ -55,16 +54,9 @@ curl -X POST https://basket-csv-generator.vercel.app/api/generate \
   --output basket.csv
 ```
 
-## Local development
+## Running it
 
-```bash
-git clone https://github.com/BhanuprakashAvadutha/basket-csv-generator.git
-cd basket-csv-generator
-npm install
-cp .env.example .env.local
-# Add ANTHROPIC_API_KEY to .env.local
-npm run dev
-```
+This excerpt contains the API route (`src/app/api/generate/route.ts`) only. To run it, drop the route into a Next.js 15 app with `@anthropic-ai/sdk` and `zod` installed and set `ANTHROPIC_API_KEY`.
 
 ## Supported brokers
 
